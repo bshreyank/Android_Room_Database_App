@@ -1,19 +1,19 @@
 package com.example.roomappstevdzasan.fragments.add
 
+import User
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.roomappstevdzasan.R
-import com.example.roomappstevdzasan.model.User
 import com.example.roomappstevdzasan.viewmodel.UserViewModel
 
 class AddFragment : Fragment() {
