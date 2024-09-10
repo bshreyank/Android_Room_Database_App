@@ -19,8 +19,9 @@ import com.example.roomappstevdzasan.data.UserViewModel
 
 class AddFragment : Fragment() {
 
-    private lateinit var mUserViewModel: UserViewModel
+    private lateinit var mUserViewModel: UserViewModel  // ViewModel for interacting with User data
 
+    // UI elements
     private lateinit var addFirstNameEt: EditText
     private lateinit var addLastNameEt: EditText
     private lateinit var addAgeEt: EditText
@@ -32,6 +33,7 @@ class AddFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_add, container, false)
 
+        // Initialize ViewModel
         mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
 
         // Find views by their IDs
@@ -43,30 +45,33 @@ class AddFragment : Fragment() {
 //            insertDataToDatabase()
 //        }
 
-        val addButton = view.findViewById<Button>(R.id.add_btn)
+        val addButton = view.findViewById<Button>(R.id.add_btn) // Find the add button
 
         addButton.setOnClickListener{
-            insertDataToDatabase()
+            // Set click listener for the add button
+            insertDataToDatabase()  // Call insertDataToDatabase() when button is clicked
         }
 
         return view
     }
 
     private fun insertDataToDatabase(){
-        val firstName = addFirstNameEt.text.toString()
-        val lastName = addLastNameEt.text.toString()
-        val age = addAgeEt.text
+        val firstName = addFirstNameEt.text.toString() // Get first name from EditText
+        val lastName = addLastNameEt.text.toString() // Get last name from EditText
+        val age = addAgeEt.text // Get age from EditText
 
+        // Check if all fields are filled
         if(inputCheck(firstName,lastName,age)){
-            // Create User Object
+            // Create User Object with the entered data.
             val user = User(0,firstName, lastName, Integer.parseInt(age.toString()))
 
-            // Add Data to Database'
+            // Add Data to Database - using the ViewModel.
             mUserViewModel.addUser(user)
 
+            // Show success message
             Toast.makeText(requireContext(), "Successfully added!", Toast.LENGTH_LONG).show()
 
-            // Navigate Back
+            // Navigate Back to the list fragment.
             findNavController().navigate(R.id.action_addFragment_to_listFragment)
         }else{
             Toast.makeText(requireContext(), "Please fill out all the fields.", Toast.LENGTH_LONG).show()
