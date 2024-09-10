@@ -4,7 +4,7 @@ package com.example.roomappstevdzasan.fragments.list
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.roomappstevdzasan.data.User
+import com.example.roomappstevdzasan.model.User
 import com.example.roomappstevdzasan.databinding.CustomRowBinding
 
 // ListAdapter class that extends RecyclerView.Adapter to manage and display a list of users

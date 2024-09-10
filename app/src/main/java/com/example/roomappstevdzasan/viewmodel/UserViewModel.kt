@@ -1,9 +1,12 @@
-package com.example.roomappstevdzasan.data
+package com.example.roomappstevdzasan.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
+import com.example.roomappstevdzasan.data.UserDatabase
+import com.example.roomappstevdzasan.repository.UserRepository
+import com.example.roomappstevdzasan.model.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
