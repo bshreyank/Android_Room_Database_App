@@ -1,11 +1,14 @@
 package com.example.roomappstevdzasan.fragments.list
 
 // Necessary imports for working with views, RecyclerView, and ViewBinding
+import User
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.example.roomappstevdzasan.model.User
-import com.example.roomappstevdzasan.databinding.CustomRowBinding
+import com.example.roomappstevdzasan.R
 
 // ListAdapter class that extends RecyclerView.Adapter to manage and display a list of users
 class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
@@ -14,32 +17,31 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
     private var userList = emptyList<User>()
 
     // ViewHolder class that holds the views for each item in the RecyclerView
-    class MyViewHolder(private val binding: CustomRowBinding) : RecyclerView.ViewHolder(binding.root) {
-        // Bind data from a User object to the views in the layout
-        fun bind(user: User) {
-            // Set text for each TextView using the data from the User object
-            binding.idTxt.text = user.id.toString()          // Display user ID
-            binding.firstNameTxt.text = user.firstName       // Display user first name
-            binding.lastNameTxt.text = user.lastName         // Display user last name
-            binding.ageTxt.text = user.age.toString()        // Display user age
-        }
-    }
+    class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {}
 
     // Function to create and return a new ViewHolder object for each item
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        // Inflate the layout for each row (custom_row.xml) and create a binding object
-        val binding = CustomRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        // Return a new ViewHolder that contains the inflated layout
-        return MyViewHolder(binding)
+        return MyViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.custom_row, parent, false))
     }
 
     // Function to bind the data to the ViewHolder for each item at a specific position
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         // Get the current User object based on the position
         val currentItem = userList[position]
-        // Call the bind function to set the data to the views
-        holder.bind(currentItem)
+
+        // Find the TextViews using findViewById and set(update) their text.
+        holder.itemView.findViewById<TextView>(R.id.id_txt).text = currentItem.id.toString()
+        holder.itemView.findViewById<TextView>(R.id.firstName_txt).text = currentItem.firstName
+        holder.itemView.findViewById<TextView>(R.id.lastName_txt).text = currentItem.lastName
+        holder.itemView.findViewById<TextView>(R.id.age_txt).text = currentItem.age.toString()
+
+        // Set the click listener for the row layout
+        holder.itemView.findViewById<RecyclerView>(R.id.rowLayout).setOnClickListener {
+            val action = ListFragmentDirections.actionListFragmentToUpdateFragment(currentItem)
+            holder.itemView.findNavController().navigate(action)
+        }
     }
+
 
     // Function that returns the total number of items in the list
     override fun getItemCount(): Int {
@@ -70,10 +72,6 @@ Represents a single row in the RecyclerView.
     It holds the views for each item (row) in the list.
     The constructor takes a CustomRowBinding object,
     which provides references to the views in the custom_row.xml layout file.
-
-onCreateViewHolder:
-Inflates the custom_row.xml layout using CustomRowBinding.
-    It creates a new MyViewHolder instance for each item in the RecyclerView.
 
 onBindViewHolder:
 Binds the data to the views for each item at a specific position in the list.
